@@ -331,8 +331,14 @@ if __name__ == '__main__':
     shell = Shell(api_key)
     if len(sys.argv) > 1:
         url = sys.argv[1]
-        if url == 'me':
-            workspace = shell.path[shell.WORKSPACES][0]
+        if url.endswith('me'):
+            name = url.rpartition('/')[:1][0]
+            names = [ws['name'] for ws in shell.path[shell.WORKSPACES]]
+            print(name, names)
+            if name in names:
+                workspace = [ws for ws in shell.path[shell.WORKSPACES] if ws['name'] == name][0]
+            else:
+                workspace = shell.path[shell.WORKSPACES][0]
             shell.pwd.append(workspace)
             shell.path[shell.PROJECTS] = shell.api.projects(workspace['id'])
             shell.pwd.append('me')
