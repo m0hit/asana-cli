@@ -332,9 +332,8 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         url = sys.argv[1]
         if url.endswith('me'):
-            name = url.rpartition('/')[:1][0]
+            name = url.rpartition('/')[0]
             names = [ws['name'] for ws in shell.path[shell.WORKSPACES]]
-            print(name, names)
             if name in names:
                 workspace = [ws for ws in shell.path[shell.WORKSPACES] if ws['name'] == name][0]
             else:
